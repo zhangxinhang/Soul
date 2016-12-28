@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
+    }
+}
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version = '1.0'
+
+dependencyManagement {
+     imports {
+          mavenBom 'org.springframework.cloud:spring-cloud-netflix:1.2.3.RELEASE'
+     }
+}
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+	maven{
+		url 'http://maven.aliyun.com/nexus/content/groups/public/'
+	}
+    mavenCentral()    
+}
+project.ext.set("SBVersion", "1.4.3.RELEASE") 
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile "org.springframework.boot:spring-boot-starter-web:"+SBVersion
+    compile "org.springframework.boot:spring-boot-devtools"
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+test {
+    systemProperties 'property': 'value'
+}
+eclipse {
+  classpath {
+	defaultOutputDir = file('build/classes/main')
+  }
+}
+uploadArchives {
+    repositories {
+       flatDir {	
+           dirs 'repos'
+       }
+    }
+}
