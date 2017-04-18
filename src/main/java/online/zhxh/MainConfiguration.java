@@ -1,18 +1,23 @@
-package online.zhxh.config;
+package online.zhxh;
 
-import org.mybatis.spring.annotation.MapperScan;
+import javax.sql.DataSource;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Controller;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@EnableTransactionManagement
 @SpringBootApplication
-@EntityScan("online.zhxh.vo")
-@MapperScan("online.zhxh.mapper")
-@ComponentScan(basePackages = "online.zhxh.controller", useDefaultFilters = false, includeFilters = {
-        @ComponentScan.Filter(value = { Controller.class }) })
 public class MainConfiguration {
+
+	@Bean(name = "txManager")
+	public PlatformTransactionManager txManager(DataSource dataSource) {
+		return new DataSourceTransactionManager(dataSource);
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(MainConfiguration.class, args);
 	}

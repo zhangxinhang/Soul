@@ -3,9 +3,8 @@ package online.zhxh.controller;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +27,14 @@ public class HelloController {
 	public @ResponseBody Greeting sayHello(
 			@RequestParam(value = "name", required = false, defaultValue = "Stranger") String name) {
 		return new Greeting(counter.incrementAndGet(),
-				String.format(template, greetingMapper.findByState("1").getContent()));
+				String.format(template, greetingMapper.findByState("1").getContent()) + "sd");
+	}
+
+	@Transactional
+	@RequestMapping(method = RequestMethod.GET, path = "/testx")
+	public @ResponseBody int test() {
+		int temp = greetingMapper.insertData("hello testx1");
+		return temp;
 	}
 
 }
