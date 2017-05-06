@@ -1,9 +1,12 @@
 package online.zhxh.repository;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import online.zhxh.vo.Post;
 
-public interface PostRepository extends PagingAndSortingRepository<Post, Integer> {
-
+@Repository
+public interface PostRepository extends JpaRepository<Post, Integer> {
+	//@EntityGraph(attributePaths = { "user" })
+	Post getOne(Integer id); 
 }
