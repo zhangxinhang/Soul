@@ -44,7 +44,7 @@ public class HelloController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.GET, path = "/testx")
 	public @ResponseBody int test() {
-		int temp = greetingMapper.insertData("hello testx1");
+		int temp = greetingMapper.insertData("hello world");
 		return temp;
 	}
 
